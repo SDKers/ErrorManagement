@@ -34,7 +34,5 @@ android {
 
 }
 dependencies {
-//    implementation files('/Volumes/MacintoshHD/workspace/android/workspace/Aggregation/app/libs/libReport-debug.aar')
-//    implementation fileTree(dir: 'libs', include: ['*.aar'])
-    implementation project(path: ':libReport')
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
 }

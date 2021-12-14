@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
-
-//apply plugin: 'com.kezong.fat-aar'
+apply plugin: 'com.kezong.fat-aar'
 android {
     compileSdk 32
 
@@ -58,23 +57,11 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 dependencies {
-
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
-    api 'com.tencent.bugly:crashreport:latest.release'
-    api 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 友盟统计SDK
-    api 'com.umeng.umsdk:common:9.4.4'// 必选
-    api 'com.umeng.umsdk:asms:1.4.1'// 必选
-    api 'com.umeng.umsdk:apm:1.5.2'//必选
-    api 'com.umeng.umsdk:abtest:1.0.0'//使用AB
-//    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
-//    embed 'com.tencent.bugly:crashreport:latest.release'
-//    embed 'com.tencent.bugly:nativecrashreport:latest.release'
-//    // 友盟统计SDK
-//    embed 'com.umeng.umsdk:common:9.4.4'// 必选
-//    embed 'com.umeng.umsdk:asms:1.4.1'// 必选
-//    embed 'com.umeng.umsdk:apm:1.5.2'//必选
-//    embed 'com.umeng.umsdk:abtest:1.0.0'//使用AB
+    embed 'com.umeng.umsdk:asms:1.4.1'// 必选
+    embed 'com.umeng.umsdk:apm:1.5.2'//必选
+    embed 'com.umeng.umsdk:abtest:1.0.0'//使用AB
 
 
     testImplementation 'junit:junit:4.+'
