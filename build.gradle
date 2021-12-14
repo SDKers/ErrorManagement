@@ -1,0 +1,60 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = '1.6.10-RC'
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://repo1.maven.org/maven2/' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    isDebug = true//isDebug= true，生成apk；isdebug=false，生成aar
+    kotlin_version = '1.6.10-RC'
+    android = [
+            "applicationId"     : "com.analysis.aggregation",
+            "demoapp"           : "com.analysis.demoapp",
+            "minSdk"            : 21,
+            "compileSdk"        : 31,
+            "targetSdk"         : 31,
+            "versionCode"       : 1,
+            "versionName"       : "1.0",
+            "AndroidJUnitRunner": "androidx.test.runner.AndroidJUnitRunner"
+    ]
+    libs = [
+            "appcompat"       : 'androidx.appcompat:appcompat:1.2.0',
+            "material"        : 'com.google.android.material:material:1.3.0',
+            "constraintlayout": 'androidx.constraintlayout:constraintlayout:2.0.4',
+            "coreKtx"         : "androidx.core:core-ktx:+",
+            "kotlinStdlibJdk7": "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+    ]
+    statictic = [
+            //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
+            "buglyReport": 'com.tencent.bugly:crashreport:latest.release',
+
+            // 友盟统计SDK
+            "umsdkCommon": 'com.umeng.umsdk:common:9.4.4',// 必选
+            "umsdkAsms"  : 'com.umeng.umsdk:asms:1.4.1',// 必选
+            "umsdkApm"   : 'com.umeng.umsdk:apm:1.5.2',//必选
+            "umsdkABtest": 'com.umeng.umsdk:abtest:1.0.0',//使用ABTest模块必选
+    ]
+    test = [
+            "junit": 'junit:junit:4.+',
+    ]
+    androidTest = [
+
+            "androidTestJunit"       : 'androidx.test.ext:junit:1.1.2',
+            "androidTestEspressoCore": 'androidx.test.espresso:espresso-core:3.3.0',
+    ]
+
+}

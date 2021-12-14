@@ -1,0 +1,46 @@
+def cfg = rootProject.ext
+if (cfg.isDebug) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdk cfg.android.compileSdk
+
+    defaultConfig {
+        if (cfg.isDebug) {
+            applicationId cfg.android.applicationId
+        }
+        minSdk cfg.android.minSdk
+        targetSdk cfg.android.targetSdk
+        versionCode cfg.android.versionCode
+        versionName cfg.android.versionName
+
+        testInstrumentationRunner cfg.android.AndroidJUnitRunner
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dependencies {
+        cfg.libs.each { k, v -> implementation v }
+        cfg.statictic.each { k, v -> implementation v }
+        cfg.test.each { k, v -> testImplementation v }
+        cfg.androidTest.each { k, v -> androidTestImplementation v }
+    }
+}
+
