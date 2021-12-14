@@ -2,8 +2,8 @@ package com.analysis.aggregation;
 
 import android.app.Application;
 
-import com.analysis.aggregation.util.Constant;
-import com.analysis.aggregation.util.ErrorReport;
+import com.analysis.libreport.Constant;
+import com.analysis.libreport.ErrorReport;
 
 /**
  * @author afa

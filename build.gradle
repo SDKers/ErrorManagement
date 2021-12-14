@@ -19,14 +19,14 @@ task clean(type: Delete) {
 }
 
 ext {
-    isDebug = true//isDebug= true，生成apk；isdebug=false，生成aar
+    isDebug = false//isDebug= true，生成apk；isdebug=false，生成aar
     kotlin_version = '1.6.10-RC'
     android = [
             "applicationId"     : "com.analysis.aggregation",
             "demoapp"           : "com.analysis.demoapp",
-            "minSdk"            : 21,
+            "minSdk"            : 15,
             "compileSdk"        : 31,
-            "targetSdk"         : 31,
+            "targetSdk"         : 32,
             "versionCode"       : 1,
             "versionName"       : "1.0",
             "AndroidJUnitRunner": "androidx.test.runner.AndroidJUnitRunner"

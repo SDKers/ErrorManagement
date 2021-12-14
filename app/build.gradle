@@ -1,18 +1,12 @@
 def cfg = rootProject.ext
-if (cfg.isDebug) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
     compileSdk cfg.android.compileSdk
 
     defaultConfig {
-        if (cfg.isDebug) {
-            applicationId cfg.android.applicationId
-        }
+        applicationId cfg.android.applicationId
         minSdk cfg.android.minSdk
         targetSdk cfg.android.targetSdk
         versionCode cfg.android.versionCode
@@ -21,7 +15,7 @@ android {
         testInstrumentationRunner cfg.android.AndroidJUnitRunner
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
 
@@ -37,37 +31,11 @@ android {
     }
     dependencies {
         cfg.libs.each { k, v -> implementation v }
-        cfg.statictic.each { k, v -> implementation v }
-        cfg.test.each { k, v -> testImplementation v }
-        cfg.androidTest.each { k, v -> androidTestImplementation v }
     }
-    if (cfg.isDebug) {
-        // 修改APK生成路径及名称
-        applicationVariants.all { variant ->
-            def apkDir = new File("${project.rootDir}/${project.name}/apks/${makeTime()}")
 
-            variant.getPackageApplicationProvider().get().outputDirectory = apkDir
-            variant.outputs.all { output ->
-                outputFileName = "error_managment" + '_' + variant.buildType.name + '.apk'
-            }
-        }
-    } else {
-        //自定义aar名称
-        libraryVariants.all { variant ->
-            def aarDir = new File("${project.rootDir}/${project.name}/aars/${makeTime()}")
-            variant.outputs.all {
-                outputFileName = "error_managment" + '_' + variant.buildType.name + ".aar"
-                // 输出目录在：项目目录/build/outputs/aar/日期-gitCommit/
-                copy {
-                    from outputFile
-                    into aarDir
-                }
-
-            }
-        }
-    }
 }
-// 编译时间
-static def makeTime() {
-    return new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getTimeZone("GMT+8"))
+dependencies {
+    implementation files('/Volumes/MacintoshHD/workspace/android/workspace/Aggregation/app/libs/libReport-debug.aar')
+//    implementation fileTree(dir: 'libs', include: ['*.aar'])
+//    implementation project(path: ':libReport')
 }
