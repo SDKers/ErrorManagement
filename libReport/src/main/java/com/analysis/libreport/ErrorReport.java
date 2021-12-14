@@ -16,25 +16,32 @@ import java.util.Date;
  * @Create: 2021/11/30 4:46 PM
  * @author: sanbo
  */
-public class P {
+public class ErrorReport {
     private static boolean isinitum = false;
     private static boolean isinitBugly = false;
 
-    public static void initReport(Context ctx, String umKey, String buglyKey, String channel) {
+    public static void init(Context ctx, String umKey, String buglyKey, String channel) {
         initBugly(ctx, buglyKey, channel);
         inituum(ctx, umKey, channel);
     }
 
-    public static void report(Context ctx, Throwable e) {
+    public static void reportError(Context ctx, Throwable e) {
         if (isinitBugly) {
-//           reportBugly(ctx,e);
-
-            CrashReport.postCatchedException(e);
+            reportBugly(ctx, e);
         }
         if (isinitum) {
-//            reportUm(ctx,e);
-            MobclickAgent.reportError(ctx, e);
+            reportUm(ctx, e);
         }
+    }
+
+    private static void reportUm(Context ctx, Throwable e) {
+        MobclickAgent.reportError(ctx.getApplicationContext(), e);
+    }
+
+    private static void reportBugly(Context ctx, Throwable e) {
+        CrashReport.setUserSceneTag(ctx.getApplicationContext(), 208685);
+        CrashReport.postCatchedException(e);
+
     }
 
     static void initBugly(Context ctx, String key, String channel) {
@@ -54,12 +61,18 @@ public class P {
         }
         UMConfigure.preInit(ctx, key, channel);
         UMConfigure.init(ctx, key, channel, UMConfigure.DEVICE_TYPE_PHONE, "");
+        MobclickAgent.setSessionContinueMillis(1);
         MobclickAgent.setCatchUncaughtExceptions(true);
         UMConfigure.setLogEnabled(true);
         UMConfigure.setEncryptEnabled(true);
         UMConfigure.setProcessEvent(true);
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         isinitum = true;
+
+
+        // 支持在子进程中统计自定义事件
+        UMConfigure.setProcessEvent(true);
+
     }
 
 

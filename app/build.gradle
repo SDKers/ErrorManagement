@@ -1,6 +1,5 @@
 def cfg = rootProject.ext
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdk cfg.android.compileSdk
@@ -35,7 +34,7 @@ android {
 
 }
 dependencies {
-    implementation files('/Volumes/MacintoshHD/workspace/android/workspace/Aggregation/app/libs/libReport-debug.aar')
+//    implementation files('/Volumes/MacintoshHD/workspace/android/workspace/Aggregation/app/libs/libReport-debug.aar')
 //    implementation fileTree(dir: 'libs', include: ['*.aar'])
-//    implementation project(path: ':libReport')
+    implementation project(path: ':libReport')
 }

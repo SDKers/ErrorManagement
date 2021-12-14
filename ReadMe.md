@@ -28,3 +28,6 @@
 > 生成aar方法
 在工程的根build.gradle文件中修改`isDebug`字段，当`isDebug=true`时，生成aar文件，
 当`isDebug=false`时，生成apk文件。
+
+
+友盟  x86的兼容性——不允许崩溃
