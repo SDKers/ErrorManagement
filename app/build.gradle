@@ -4,7 +4,6 @@ if (cfg.isDebug) {
 } else {
     apply plugin: 'com.android.library'
 }
-
 apply plugin: 'kotlin-android'
 
 android {
@@ -42,5 +41,33 @@ android {
         cfg.test.each { k, v -> testImplementation v }
         cfg.androidTest.each { k, v -> androidTestImplementation v }
     }
-}
+    if (cfg.isDebug) {
+        // 修改APK生成路径及名称
+        applicationVariants.all { variant ->
+            def apkDir = new File("${project.rootDir}/${project.name}/apks/${makeTime()}")
 
+            variant.getPackageApplicationProvider().get().outputDirectory = apkDir
+            variant.outputs.all { output ->
+                outputFileName = "error_managment" + '_' + variant.buildType.name + '.apk'
+            }
+        }
+    } else {
+        //自定义aar名称
+        libraryVariants.all { variant ->
+            def aarDir = new File("${project.rootDir}/${project.name}/aars/${makeTime()}")
+            variant.outputs.all {
+                outputFileName = "error_managment" + '_' + variant.buildType.name + ".aar"
+                // 输出目录在：项目目录/build/outputs/aar/日期-gitCommit/
+                copy {
+                    from outputFile
+                    into aarDir
+                }
+
+            }
+        }
+    }
+}
+// 编译时间
+static def makeTime() {
+    return new Date().format("yyyy-MM-dd-HH-mm", TimeZone.getTimeZone("GMT+8"))
+}
