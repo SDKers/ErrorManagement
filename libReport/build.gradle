@@ -17,6 +17,7 @@ android {
                 abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
             }
         }
+
     }
 
     buildTypes {
@@ -50,19 +51,29 @@ android {
     compileSdkVersion compileSdk
     buildToolsVersion '31.0.0'
     ndkVersion '23.0.7599858'
-}
 
+
+}
+android.libraryVariants.all { variant ->
+    variant.outputs.all {
+        outputFileName = "error_managment" + '_' + variant.buildType.name + ".aar"
+    }
+}
 tasks.withType(Javadoc) {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+
+
+task copyAar(type: Copy) {
+    from('build/outputs/aar/error_managment_debug.aar')
+    into "../app/libs/"
+}
 dependencies {
-//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
     cfg.statictic.each { k, v -> embed v }
-
-
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    cfg.test.each { k, v -> implementation v }
+    cfg.androidTest.each { k, v -> implementation v }
 }

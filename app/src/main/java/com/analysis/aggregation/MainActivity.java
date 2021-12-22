@@ -17,17 +17,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Exit(View view) {
-        for (int i = 0; i < 50; i++) {
-//            ErrorReport.reportError(this, "xxxxx");
-            ErrorReport.reportError(this, new Throwable("test for throwable."));
+        for (int i = 0; i < 5; i++) {
+            ErrorReport.reportError(this, new Throwable("test for throwable.xxxx"));
             testExceptionUpload();
         }
     }
 
     private void testExceptionUpload() {
-        int a = 10;
-        int b = 0;
-        System.out.println(a / b);
+        try {
+            int a = 10;
+            int b = 0;
+            System.out.println(a / b);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorReport.reportError(this,
+                    new Throwable("test:====>>>>"
+                            + System.currentTimeMillis()
+                            + e.getMessage()));
+        }
     }
 
 }
