@@ -28,11 +28,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dependencies {
-        cfg.libs.each { k, v -> implementation v }
-    }
-
 }
 dependencies {
+    cfg.libs.each { k, v -> implementation v }
+//        cfg.statictic.each { k, v -> implementation v }
+    cfg.test.each { k, v -> testImplementation v }
+    cfg.androidTest.each { k, v -> androidTestImplementation v }
+
     implementation fileTree(dir: 'libs', include: ['*.aar'])
 }

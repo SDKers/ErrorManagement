@@ -1,11 +1,13 @@
 package com.analysis.libreport;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -50,15 +52,22 @@ public class ErrorReport {
         }
         CrashReport.initCrashReport(ctx, key, false);
         CrashReport.setUserId(channel);
-        CrashReport.setUserSceneTag(ctx, new Date().getDate());
+
+        CrashReport.setUserSceneTag(ctx, getIntToday());
         isinitBugly = true;
     }
 
+    static int getIntToday() {
+        String todafy =
+                new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis()));
+        return Integer.parseInt(todafy);
+    }
 
     static void inituum(Context ctx, String key, String channel) {
         if (isinitum) {
             return;
         }
+        Log.i("afa", "inituum: key=" + key + ",channel=" + channel);
         UMConfigure.preInit(ctx, key, channel);
         UMConfigure.init(ctx, key, channel, UMConfigure.DEVICE_TYPE_PHONE, "");
         MobclickAgent.setSessionContinueMillis(1);

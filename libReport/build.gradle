@@ -1,3 +1,4 @@
+def cfg = rootProject.ext
 apply plugin: 'com.android.library'
 apply plugin: 'com.kezong.fat-aar'
 android {
@@ -57,11 +58,8 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    // 友盟统计SDK
-    embed 'com.umeng.umsdk:asms:1.4.1'// 必选
-    embed 'com.umeng.umsdk:apm:1.5.2'//必选
-    embed 'com.umeng.umsdk:abtest:1.0.0'//使用AB
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    cfg.statictic.each { k, v -> embed v }
 
 
     testImplementation 'junit:junit:4.+'
