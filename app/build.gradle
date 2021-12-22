@@ -24,15 +24,43 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dependencies {
-        cfg.libs.each { k, v -> implementation v }
+    dexOptions {
+        preDexLibraries false
+        maxProcessCount 8
+        javaMaxHeapSize "4g"
     }
-
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        warningsAsErrors false
+        disable "UnusedResources"
+        textOutput "stdout"
+        textReport false
+        disable 'RestrictedApi'
+    }
+    compileSdkVersion compileSdk
+    buildToolsVersion '31.0.0'
+    ndkVersion '23.0.7599858'
 }
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
 dependencies {
+    cfg.libs.each { k, v -> implementation v }
     implementation fileTree(dir: 'libs', include: ['*.aar'])
 }
+
