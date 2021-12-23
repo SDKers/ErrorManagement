@@ -2,16 +2,16 @@ def cfg = rootProject.ext
 apply plugin: 'com.android.library'
 apply plugin: 'com.kezong.fat-aar'
 
-def version="v1.2"
+def version = "v1.2"
 android {
-    compileSdk 32
+    compileSdk cfg.android.compileSdk
     compileSdkVersion compileSdk
-    buildToolsVersion '31.0.0'
-    ndkVersion '23.0.7599858'
+    buildToolsVersion cfg.android.buildToolsVersion
+    ndkVersion cfg.android.ndkVersion
 
     defaultConfig {
-        minSdk 15
-        targetSdk 32
+        minSdk cfg.android.minSdk
+        targetSdk cfg.android.targetSdk
         versionCode 3
         versionName "${version}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -28,7 +28,7 @@ android {
     buildTypes {
         release {
         }
-        debug{
+        debug {
         }
     }
     compileOptions {
@@ -53,9 +53,6 @@ android {
         textReport false
         disable 'RestrictedApi'
     }
-
-
-
 }
 
 tasks.withType(Javadoc) {
@@ -65,10 +62,10 @@ tasks.withType(Javadoc) {
 }
 
 
-task copyAar(type: Copy) {
-    from('build/outputs/aar/error_managment_debug.aar')
-    into "../app/libs/"
-}
+//task copyAar(type: Copy) {
+//    from('build/outputs/aar/error_managment_debug.aar')
+//    into "../app/libs/"
+//}
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -97,6 +94,11 @@ assemble.doLast {
                     from originFile
                     into "${rootDir}/release"
                     rename(originFile.name, "report_release_${version}.aar")
+                }
+                copy {
+                    from originFile
+                    into "${rootDir}/app/libs"
+//                    rename(originFile.name, "report_release_${version}.aar")
                 }
             }
         }

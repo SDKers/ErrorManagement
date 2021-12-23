@@ -23,8 +23,10 @@ ext {
             "applicationId"     : "com.analysis.aggregation",
             "demoapp"           : "com.analysis.demoapp",
             "minSdk"            : 15,
-            "compileSdk"        : 32,
-            "targetSdk"         : 32,
+            "compileSdk"        : 31,
+            "targetSdk"         : 31,
+            "buildToolsVersion"         : "31.0.0",
+            "ndkVersion"         : "23.0.7599858",
             "versionCode"       : 1,
             "versionName"       : "1.0",
             "AndroidJUnitRunner": "androidx.test.runner.AndroidJUnitRunner"
