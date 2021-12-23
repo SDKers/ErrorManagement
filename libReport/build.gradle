@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.kezong.fat-aar'
 android {
     compileSdk 32
+    compileSdkVersion compileSdk
+    buildToolsVersion '31.0.0'
+    ndkVersion '23.0.7599858'
 
     defaultConfig {
         minSdk 15
@@ -48,9 +51,7 @@ android {
         textReport false
         disable 'RestrictedApi'
     }
-    compileSdkVersion compileSdk
-    buildToolsVersion '31.0.0'
-    ndkVersion '23.0.7599858'
+
 
 
 }
